@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Advice</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+
+  <body onload="refresh()">
+
+    <div class="header">
+        <center>
+         
+            <menu class="menu">
+               
+              <button class="menu__item ">
+
+                  <div class="menu__icon" >
+                     <script src="https://cdn.lordicon.com/fudrjiwc.js"></script>
+                     <a href="currency2.html">
+                       <img alt="" src="wallet.gif"
+                        style="width:32px;height:32px; padding-right:50px"> 
+                      <!-- <lord-icon
+                                src="https://cdn.lordicon.com/jsoeastu.json"
+                                trigger="hover"
+                                style="width:32px;height:32px; padding-right:70px">
+                      </lord-icon> -->
+                    </a>
+                  </div>  
+                  <strong class="menu__text "> <a href="currency2.html" style="text-decoration: none;">Currency </a></strong>
+
+              </button>
+     
+              <button class="menu__item active">
+                  <div class="menu__icon" >
+                      <img alt="" src="api.gif"
+                      style="width:32px;height:32px; padding-right:50px"> 
+                    <!-- <script src="https://cdn.lordicon.com/fudrjiwc.js"></script>
+                        <lord-icon
+                          src="https://cdn.lordicon.com/ktybrenb.json"
+                          trigger="hover"
+                          style="width:32px;height:32px;padding-right:70px">
+                        </lord-icon>
+                         -->
+                  </div>
+                  <strong class="menu__text active">Advice</strong>
+              </button>
+        
+              <button class="menu__item">
+                  <div class="menu__icon" >
+                    <a href="cats.html">
+                     <img alt="" src="cat.gif"
+                          style="width:32px;height:32px; padding-right:50px"> 
+
+
+                  </div>
+                  <strong class="menu__text">Cat gif</strong>
+                </a>
+              </button>
+            </menu>
+        </center>
+        
+        
+          </menu>
+      <div class="inner-header flex">
+        <div id="app"></div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <center>
+          <p id="advice"></p>
+          <br />
+          <button class="pressed-button" onload="refresh()" onclick="refresh()">
+            refresh
+          </button>
+        </center>
+      </div>
+
+      <!--Waves Container-->
+      <div>
+        <svg
+          class="waves"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 24 150 28"
+          preserveAspectRatio="none"
+          shape-rendering="auto"
+        >
+          <defs>
+            <path
+              id="gentle-wave"
+              d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+            />
+          </defs>
+          <g class="parallax">
+            <use
+              xlink:href="#gentle-wave"
+              x="48"
+              y="0"
+              fill="rgba(255,255,255,0.7"
+            />
+            <use
+              xlink:href="#gentle-wave"
+              x="48"
+              y="3"
+              fill="rgba(255,255,255,0.5)"
+            />
+            <use
+              xlink:href="#gentle-wave"
+              x="48"
+              y="5"
+              fill="rgba(255,255,255,0.3)"
+            />
+            <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+          </g>
+        </svg>
+      </div>
+      <!--Waves end-->
+    </div>
+    <!--Header ends-->
+
+    <!--Content ends-->
+
+    <script>
+      
+const buttons = document.querySelectorAll(".menu__item");
+let activeButton = document.querySelector(".menu__item.active");
+
+buttons.forEach(item => {
+
+    const text = item.querySelector(".menu__text");
+    setLineWidth(text, item);
+
+    window.addEventListener("resize", () => {
+        setLineWidth(text, item);
+    })
+
+    item.addEventListener("click", function() {
+        if (this.classList.contains("active")) return;
+
+        this.classList.add("active");
+        
+        if (activeButton) {
+            activeButton.classList.remove("active");
+            activeButton.querySelector(".menu__text").classList.remove("active");
+        }
+        
+        handleTransition(this, text);
+        activeButton = this;
+
+    });
+
+    
+});
+
+
+function setLineWidth(text, item) {
+    const lineWidth = text.offsetWidth + "px";
+    item.style.setProperty("--lineWidth", lineWidth);
+}
+
+function handleTransition(item, text) {
+
+    item.addEventListener("transitionend", (e) => {
+
+        if (e.propertyName != "flex-grow" || 
+        !item.classList.contains("active")) return;
+
+        text.classList.add("active");
+        
+    });
+
+}
+      function refresh() {
+        try {
+          fetch("https://api.adviceslip.com/advice")
+            .then((response) => response.json())
+            .then(
+              (commits) =>
+                (document.getElementById("advice").innerHTML =
+                  commits.slip.advice)
+            );
+        } catch (err) {
+          document.getElementById("advice").innerHTML = "Some error ";
+        }
+      }
+      refresh();
+    </script>
+  </body>
+</html>

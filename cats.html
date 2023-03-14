@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cats</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+
+  <body onload="refresh()">
+    <div class="header">
+      <center>
+        <menu class="menu">
+          <button class="menu__item">
+            <div class="menu__icon">
+              <script src="https://cdn.lordicon.com/fudrjiwc.js"></script>
+              <a href="currency2.html">
+                <img
+                  alt=""
+                  src="wallet.gif"
+                  style="width: 32px; height: 32px; padding-right: 50px;"
+                />
+
+                <!-- <lord-icon
+                  src="https://cdn.lordicon.com/jsoeastu.json"
+                  trigger="hover"
+                  style="width: 32px; height: 32px; padding-right: 70px;"
+                >
+                </lord-icon> -->
+              </a>
+            </div>
+            <strong class="menu__text">
+              <a href="currency2.html" style="text-decoration: none;"
+                >Currency
+              </a></strong
+            >
+          </button>
+
+          <button class="menu__item">
+            <div class="menu__icon">
+              <a href="index.html">
+                <img
+                  alt=""
+                  src="api.gif"
+                  style="width: 32px; height: 32px; padding-right: 50px;"
+              /></a>
+              <!-- <script src="https://cdn.lordicon.com/fudrjiwc.js"></script>
+                      <lord-icon
+                        src="https://cdn.lordicon.com/ktybrenb.json"
+                        trigger="hover"
+                        style="width:32px;height:32px;padding-right:70px">
+                      </lord-icon>
+                       -->
+            </div>
+            <a href="index.html"></a> <strong class="menu__text">Advice</strong>
+          </button>
+
+          <button class="menu__item active">
+            <div class="menu__icon">
+              <img
+                alt=""
+                src="cat.gif"
+                style="width: 32px; height: 32px; padding-right: 50px;"
+              />
+            </div>
+            <strong class="menu__text active">Cats</strong>
+          </button>
+        </menu>
+      </center>
+      <!--Content before waves-->
+      <div class="inner-header flex">
+        <center>
+          <div id="app">
+            <br />
+            <div><img id="advice2" alt="" style="height: 25em;" /></div>
+          </div>
+        </center>
+      </div>
+      <!--Waves Container-->
+      <div>
+        <div style="padding-bottom: 20px;">
+          <button class="pressed-button" onload="refresh()" onclick="refresh()">
+            refresh
+          </button>
+        </div>
+        <svg
+          class="waves"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 24 150 28"
+          preserveAspectRatio="none"
+          shape-rendering="auto"
+        >
+          <defs>
+            <path
+              id="gentle-wave"
+              d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+            />
+          </defs>
+          <g class="parallax">
+            <use
+              xlink:href="#gentle-wave"
+              x="48"
+              y="0"
+              fill="rgba(255,255,255,0.7"
+            />
+            <use
+              xlink:href="#gentle-wave"
+              x="48"
+              y="3"
+              fill="rgba(255,255,255,0.5)"
+            />
+            <use
+              xlink:href="#gentle-wave"
+              x="48"
+              y="5"
+              fill="rgba(255,255,255,0.3)"
+            />
+            <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+          </g>
+        </svg>
+      </div>
+      <!--Waves end-->
+    </div>
+    <!--Header ends-->
+
+    <!--Content ends-->
+
+    <script>
+      function refresh() {
+        let element = document.getElementById("advice");
+        try {
+          fetch("https://api.thecatapi.com/v1/images/search")
+            .then((response) => response.json())
+            .then(
+              (commits) =>
+                (document.getElementById("advice2").src = commits[0].url)
+            );
+        } catch (err) {
+          document.getElementById("advice2").alt = "Some error ";
+        }
+      }
+      refresh();
+    </script>
+  </body>
+</html>
